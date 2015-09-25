@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL | E_STRICT);
 
-class BadAssArrayObject implements ArrayAccess, Iterator {
+class TArray implements ArrayAccess, Iterator {
 
     private $position = 0;
     private $container = array();
@@ -131,5 +131,5 @@ function pre_dump($s){
 }
 
 function _array(array $normalArray){
-    return new BadAssArrayObject($normalArray);
+    return new TArray($normalArray);
 }
