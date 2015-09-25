@@ -1,6 +1,4 @@
 <?php
-error_reporting(E_ALL | E_STRICT);
-
 class TArray implements ArrayAccess, Iterator {
 
     private $position = 0;
@@ -61,7 +59,7 @@ class TArray implements ArrayAccess, Iterator {
     public function __call($func,$args){
         $callFunc = "array_".$func;
         if(!is_callable($callFunc)){
-            echo "Shit";
+            throw new Exception("{$callFunc} method not found");
         }
         $callByReference = in_array($callFunc,$this->referenceFunctions);
         $container = $this->container;
@@ -85,7 +83,7 @@ class TArray implements ArrayAccess, Iterator {
 
     public function each($callback){
         if(!is_callable($callback)){
-            echo "Shit";
+            throw new Exception('missing callback function');
         }
         foreach($this->container as $key => $value){
             call_user_func_array($callback,array($key,$value));
@@ -101,35 +99,4 @@ class TArray implements ArrayAccess, Iterator {
         return count($this->container);
     }
 
-}
-
-$people = _array(
-    array(
-        array(
-            "name" => "Tomer",
-            "age" => 25
-        ),
-        array(
-            "name" => "David",
-            "age" => 23
-        ),
-        array(
-            "name" => "Moses",
-            "age" => 999
-        )
-    )
-);
-
-$david = $people->filter(function($el){
-    return $el["name"] == "David";
-});
-
-function pre_dump($s){
-    echo "<pre>";
-    var_dump($s);
-    echo "</pre>";
-}
-
-function _array(array $normalArray){
-    return new TArray($normalArray);
 }
