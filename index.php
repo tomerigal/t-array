@@ -46,12 +46,13 @@ function isTomer($person){
 
 $david = $people->filter("isDavid");
 foreach($david as $key => $person){
-    $david[$key] = $david[$key]->merge(array(
+    $david[$key] = tArray($david[$key])->merge(array(
         "hello" => "world"
     ));
 }
-
 $tomer = $people->filter("isTomer");
 $moses = $people->filter("isMoses");
 $tomerAndMoses = $tomer->merge($moses->a());
-pre_dump($people->merge($tomerAndMoses->a()));
+for($i=0;$i<$people->length();$i++){
+//    pre_dump($people[$i]->name == $tomer[0]->name);
+}

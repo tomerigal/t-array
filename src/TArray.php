@@ -30,10 +30,7 @@ class TArray implements ArrayAccess, Iterator {
     }
 
     public function offsetGet($offset) {
-        if(isset($this->container[$offset])){
-            return is_array($this->container[$offset]) ? new self($this->container[$offset]):$this->container[$offset];
-        }
-        return null;
+        return isset($this->container[$offset]) ? $this->container[$offset]:null;
     }
 
     function rewind() {
@@ -64,9 +61,9 @@ class TArray implements ArrayAccess, Iterator {
         $callByReference = in_array($callFunc,$this->referenceFunctions);
         $container = $this->container;
         if($callFunc == "array_map"){
-            array_push($args,$container);
+            $args = array_merge($args,array(&$container));
         }else{
-            array_unshift($args,$container);
+            $args = array_merge(array(&$container),$args);
         }
 
         $results = call_user_func_array($callFunc, $args);
