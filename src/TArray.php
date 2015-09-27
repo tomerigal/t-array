@@ -11,9 +11,7 @@ class TArray implements ArrayAccess, Iterator {
     }
 
     public function offsetSet($offset, $value) {
-        if(is_a($value, __CLASS__)){
-            $value = $value->a();
-        }
+        $value = is_array($value) ? self::createInstance($value):$value;
         if (is_null($offset)) {
             $this->container[] = $value;
         } else {
@@ -30,7 +28,13 @@ class TArray implements ArrayAccess, Iterator {
     }
 
     public function offsetGet($offset) {
-        return isset($this->container[$offset]) ? $this->container[$offset]:null;
+        if(!isset($this->container[$offset])){
+            return null;
+        }
+        if(is_array($this->container[$offset])){
+            $this->offsetSet($offset,self::createInstance($this->container[$offset]));
+        }
+        return $this->container[$offset];
     }
 
     function rewind() {
@@ -94,6 +98,14 @@ class TArray implements ArrayAccess, Iterator {
 
     public function length(){
         return count($this->container);
+    }
+
+    public static function createInstance($array){
+        if(!is_array($array)){
+            return false;
+        }
+
+        return new self($array);
     }
 
 }

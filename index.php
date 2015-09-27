@@ -44,15 +44,20 @@ function isTomer($person){
     return $person["name"] == "Tomer";
 }
 
-$david = $people->filter("isDavid");
-foreach($david as $key => $person){
-    $david[$key] = tArray($david[$key])->merge(array(
-        "hello" => "world"
-    ));
-}
-$tomer = $people->filter("isTomer");
-$moses = $people->filter("isMoses");
-$tomerAndMoses = $tomer->merge($moses->a());
+//$david = $people->filter("isDavid");
+//foreach($david as $key => $person){
+//    $david[$key] = $david[$key]->merge(array(
+//        "hello" => "world"
+//    ));
+//}
+$people[0]["o"] = [];
+$people[0]["o"]["name"] = "Test";
+pre_dump($people[0]);
+
+//$tomer = $people->filter("isTomer");
+//$moses = $people->filter("isMoses");
+//$tomerAndMoses = $tomer->merge($moses->a());
 for($i=0;$i<$people->length();$i++){
-//    pre_dump($people[$i]->name == $tomer[0]->name);
+//    $people[$i]["name"] = "Tomer";
+//    pre_dump($people[$i]);
 }
