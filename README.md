@@ -1,2 +1,2 @@
 # t-array
-Better syntax for php array
+Array-Wrapper
